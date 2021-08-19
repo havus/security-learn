@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symmetric and Asymmetric</title>
+</head>
+<body>
+  <h1>Symmetric and Asymmetric</h1>
+
+  <a href="https://docs.google.com/presentation/d/1HQlnojYzzc6xrUq0uW0uoOAK3TNkbPlWyoxhY61bHsk/edit">
+    Google Slide Link
+  </a>
+
+  <p>
+    <b>[READ GOALS]</b>
+    <br>Before we start, its better to know list of characters that we will meet on this session.
+    <br>This is alice, bob, eve (alias for eavesdropping), and malory (alias malicious or something maliciously)
+
+    <br><br><b>First Story</b>
+    okay, on the first story alice has plaintext and wanna send it, plaintext is a kind of message or electronic information or document,
+    and alice encrypt with some private key or secret ket, and it resulting a ciphertext (unreadable format), and then alice send it to bob, and
+    bob decrypt the ciphertext with the same key that alice used to encrypt the plaintext earlier.
+    prerequisite on this case is alice and bob must have a same key to encrypt and decrypt the information.
+
+    <br>So the question is, can eve read the information?
+    Yes eve can read it if she has the key, right?
+    <br>Can malory change the file? Of course yes, malory can do it if she has the key,
+    and type of this encryption is symmetric encryption.
+
+    <b>[READ DEFINITION]</b>
+    Encrypt and decrypt use the same key, left side and right side is same, thats why its called by symmetric.
+
+    <br><br>And the second type of encryption is asymmetric encryption.
+    <b>[READ DEFINITION]</b>**and this the case:**
+    <br>
+    Alice generate her key pair. public key and private key,
+    Private key must be kept secret (just like a key in symmetric cryptography),
+    like the name right? private, keep it secret, keep it privately.
+    and the public key can be given to anyone, trusted or not <b>[click]</b>
+
+    <br>Someone with the public key is able to encrypt a message <b>[click]</b>,
+    and then only the person in possession of the private key is able to decrypt it.
+    i mean the private key pair of the public key <b>[click]</b>, and others private key can NOT decrypt it,
+    just only the private key pair.
+
+    and the other side, bob also generate his key pair and share his public key to everyone.
+    <br>On this story alice has a plaintext, as we know, public key can used for encrypt some information,
+    so alice encrypt with bob's public key, and resulting ciphertext that only bob's private key can decrypt it.
+    <br>And then alice send the ciphertext to bob. and only bob can decrypt it.
+    <br>So, the question is can eve read the ciphertext during the transfer? NO, except she has bob's private key.
+    <br>and the next question is, can malory change the data during the transfer? can Malory pretend as alice?
+    maybe <b>YES</b>, cause there is no authentication on this case, no identification at all.
+    bob didnt know whether the file sent by alice or malory, cause all of them has bob's public key,
+    anyone be able to encrypt anything and send it to bob.
+    and how to alice say to bob, "hi this file is from me, not from malory", what should alice do?
+
+    <br>Okay, this is the second function of the private key is, to sign the document or the file 
+    <b>[click]</b>, and then anyone with the public key pair is able to verify that the message was created by someone has the corresponding private key.
+    <br>Okay and then, alice sign the ciphertext with her private key, and then it will generate a verified ciphertext.
+    and send it to bob, bob can verify with alice's public key, and bob said "oh this from alice".
+    <b>BUT</b> can eve read the file? still no, but eve can see the file is from alice
+    cause eve has alice public key, eve can verify it and say, "oh this is from alice",
+    so the confidentiality is reduced cause everyone can see who is the sender.
+    <br>Second question is, can malory snaps up the message during transfer or transit on router?
+    Yes still can. Cause mallory can discard the attached signature of Alice (separate alice signature with ciphertext)
+    and malory gets the encrypted message (but malory still can NOT read it because she doesn’t have the private key pair).
+    And after malory remove alice signature, then Mallory attaches her OWN signature to the encrypted message
+    and sends it to Bob.
+    <br>Bob receives the message, verifies Mallory’s signature as valid, decrypts and reads the content, or the decrypted request.
+
+    <b>The danger</b>here is that Bob believes Mallory to be the person who wrote the message, "oh this is from malory"
+    and he send Mallory a response that is an alice secret, ley example its a request for product list of alice's e-commerce,
+    and response will be catched by malory.
+    <br>Since the document sign by malory private key, bob also will verify with malory public key.
+    why bob encrypt use malory public key? cause previously the request verified by malory public key.
+    And then response will encrypted with malory public key and sign the response by bob's private key,
+    So, malory can read the response and alice can NOT open the response.
+
+    <br>So, the problem is sign after encryption, what if sign first and encrypt then? Okay lets try
+    <b>[next slide]</b>
+    <br>The first step we sign the document with alice's private key,
+    and then encrypt it with bob's public key, and send it to bob.
+    On the bob side, bob receive the file and decrypt it with bob's private key and verify the document with alice's public key.
+    
+    <br><br>Okay lets go back to our previous question, can eve know the file and know who is the sender? 
+    <b>[click]</b> Absolutely no cause eve doesnt has bob private key to decrypt it, and now signature inside the encryption, Eve can not know the sender.
+    So, on this case already cover the confidentiality. <b>[click]</b>
+
+    <br>and the next question is can malory pretend as sender? <b>[click]</b>
+    Malory sign the encrypted document with her private key, and said to bob,
+    "hey this is my file, and i already sign with my private key, you can use my public key to verify it",
+    now bob verify it, and decrypt it and verify again with malory public key, but its NOT match,
+    cause previously file has signed by alice, bob will has question, why there is different verifications?
+    so, bob reject the suspicious request, thats why most of people do a multiple sign to the document <b>[click]</b>,
+    but the most important thing is sign before encryption.
+    <br>Sign the plain text, encrypt it and sign again to avoid suspicious requests like this.
+    now malory can NOT pretend as alice its mean,.. already cover their authenticity. <b>[click]</b>
+
+    <br><br>its looks like asymmetric encryption is more secure, and how about speed? yes of course, asymmetric encryption run slower than symmetric encryption.
+    The question is, how to encrypt let say a book with size 200 giga bytes,
+    with asymmetric encryption it will be very slow, of course depend on hardware,
+    <br>But in this case, most of people combine symmetric and asymmetric to avoid slow performance for large file. How?
+
+    <br><b>[next slide]</b>
+    <br>Let say alice has a book, and she wanna send it to bob, alice gerenate a <b>symmetric</b> key it can be random,
+    and send it to bob with asymmetric encryption. and encrypt the book with previous symmetric key, and send it to bob,
+    and bob will decrypt it with the symmetric key that exchange previously.
+    that way will be faster rather than just using asymmetric encryption for the book.
+    <br>So, lemme summarize the use cases for asymmetric and symmetric.
+    <br><b>[READ SLIDE]</b>
+
+    <br><br><b>PKI</b>
+    <br>Do we ever think about, how to distribute our public key?
+    Tell everybody this is our public key? hey alice this my public key, and hey bob this is my public key.
+    Instead send public key to the others one by one, what if put our public key on the public place?
+    that everyone can access it. sounds good, right? and this is what PKI offer.
+
+    <br><br>What is the PKI?<br><b>[READ SLIDE]</b>
+
+    <br><b>[READ DEFINITION]</b><br>
+    Some people says its the process of managing practically every aspect of digital certificates.
+    This cover the policies and procedures, the hardware and software behind these digital cerfiticates
+    and of course the entire digital certificate process, starting with the creation all the way through the revocation.
+
+    <br>What does the digital certificate look like? <b>[READ SLIDE]</b>
+    Okay let say there is alice and bob's server, how to make alice believes that it's really bob server?
+    and Not a phising server?
+    <br>in this case Bob need a digital certificate. how to get his digital certificate?
+    <br>okay here we go, the first step bob will request to RA, bob needs to answer some question from RA.
+    <br>basically, RA is responsible for accepting requests for digital certificates and authenticating the entity that making the request.
+    <br>RA might be robot or migth be NOT, so might be automatic process. and in the end RA said "okay you eligible to request certificate to CA",
+    and RA will tells the CA to issue bob certificate. "Hi CA, please make create certificate for bob, and this is his information (including bob public key)",
+    <br>and CA will be an issuer for bob certificate, and this process can called by CSR (Certificate Signing Request).
+    <b>[click]</b>
+
+    <br><br>Okay let move on, and bob will send the certificate to alice every alice request to the server.
+    now, can alice trust the certificate immediately? what if it's a fake certificate?
+    okay alice will see digital signature from CA on the digital certificate, digital signature is just like verification, who has sign bob certificate,
+    <br>let example "oh this certificate issued by Sectigo" and can alice trust the CA immediately?
+    can alice trust <b>Sectigo</b>? maybe alice can NOT identify whether the CA is trusted or NOT, but the browser can.
+
+    <br><br>Browser will maintain a list of all the trusted comercial certificate authority, built in to alice browser.
+    <b>[click]</b> We can see the list from firefox...[read some example] and browser can verify digital signature on bob certificate with one of CA on the list.
+    <br><br><b>[click]</b> okay btw, there is an useless image over there.
+    root CA, what is root CA?
+    <br> okay, there is something called by <b>Certificate path</b>.
+    Lets inpect jurnal certificate, Root CA is the issuer of intermediate CA certificate,
+    not only bob has certificate, all of CA also has certificate, we can see intermediate CA certificate issued by Root CA.
+    Root CA are self-signed <b>[click]</b>. Let see the image, subject and issuer is same, <b>USERTRUST NETWORK</b> certificate issued by their own-self.
+    and intermediate CA certificate which is Sectigo in here, has issued by <b>USERTRUST NETWORK</b>
+    <br><br><b>[click]</b>.....<b>[click]</b>. 
+    and intermediate CA will be issuer for jurnal.id
+
+    <br><br>Okay lets go back to the previous case.
+    Once alice receive bobs certificate, browser will auto verify bob certificate,
+    browser has sectigo certificate on the list of CA's (which is built in to browser),
+    sectigo certificate's contain sectigo public key.
+    and browser use sectigo public key to verify bob certificate cause bob certificate signed by sectigo private key previously.
+    <br>So, alice can trust bob public key that is attached on bob certificate.
+
+    <br><br>and.. Done that is my sharing session, if u have question u can write it on the google meet Q&A,
+    i'll give this stage back to mas adani, thank u mas.
+  </p>
+</body>
+</html>
